@@ -1,0 +1,37 @@
+inventory = {
+    "apple": 20,
+    "banana": 15,
+    "mango": 10,
+    "orange": 8
+}
+
+item = input("Enter an item name: ").strip().lower()
+
+if item in inventory:
+    while True:
+        try:
+            sold = int(input(f"How many {item}(s) were sold? "))
+            if sold < 0:
+                print("Please enter a non-negative number.")
+                continue
+            if sold > inventory[item]:
+                print(f"Only {inventory[item]} {item}(s) in stock. Please enter a smaller number.")
+                continue
+            break
+        except ValueError:
+            print("Please enter a valid whole number.")
+
+    inventory[item] -= sold
+
+    if inventory[item] == 0:
+        del inventory[item]
+        print(f"{item.capitalize()} is now sold out and has been removed from the inventory.")
+else:
+    print(f"'{item}' is not in the inventory.")
+
+print("\nUpdated inventory:")
+if inventory:
+    for name, quantity in inventory.items():
+        print(f"{name}: {quantity}")
+else:
+    print("The inventory is empty.")
